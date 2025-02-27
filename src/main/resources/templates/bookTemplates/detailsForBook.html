@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+          crossorigin="anonymous">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">BookStore</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link active" href="/books">Books</a></li>
+                <li class="nav-item"><a class="nav-link" href="/author">Authors</a></li>
+                <li class="nav-item"><a class="nav-link" href="/bookstores">Bookstores</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container my-5" style="padding-bottom: 150px;">
+    <h1 class="text-center mb-4">Book Details</h1>
+
+    <div class="text-center mb-4">
+        <img th:if="${book.imageUrl != null and not #strings.isEmpty(book.imageUrl)}"
+             th:src="${book.imageUrl}"
+             class="img-fluid rounded"
+             style="max-width: 300px;"
+             alt="Book Cover">
+        <img th:if="${book.imageUrl == null or #strings.isEmpty(book.imageUrl)}"
+             src="https://via.placeholder.com/300x400?text=No+Image"
+             class="img-fluid rounded"
+             style="max-width: 300px;"
+             alt="No Image Available">
+    </div>
+
+    <h2 class="text-center mb-3" th:text="${book.title}">Book Title</h2>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <dl class="text-center">
+                <div class="mb-2"><strong>ISBN:</strong> <span th:text="${book.isbn}"></span></div>
+                <div class="mb-2"><strong>Genre:</strong> <span th:text="${book.genre}"></span></div>
+                <div class="mb-2"><strong>Description:</strong> <span th:text="${book.description}"></span></div>
+                <div class="mb-2"><strong>Publication Date:</strong> <span th:text="${book.publicationDate}"></span></div>
+                <div class="mb-2"><strong>Price:</strong> <span th:text="${book.price != null ? '$' + #numbers.formatDecimal(book.price, 1, 2) : 'N/A'}"></span></div>
+                <div class="mb-2"><strong>Authors:</strong>
+                    <ul th:if="${book.authors != null and not #lists.isEmpty(book.authors)}" class="list-unstyled mb-0">
+                        <li th:each="author : ${book.authors}"
+                            th:text="${author.firstName + ' ' + author.lastName}"></li>
+                    </ul>
+                    <span th:if="${book.authors == null or #lists.isEmpty(book.authors)}">No authors</span>
+                </div>
+                <div class="mb-2"><strong>BookStores:</strong>
+                    <ul th:if="${book.bookStores != null and not #lists.isEmpty(book.bookStores)}" class="list-unstyled mb-0">
+                        <li th:each="bookStore : ${book.bookStores}"
+                            th:text="${bookStore.name}"></li>
+                    </ul>
+                    <span th:if="${book.bookStores == null or #lists.isEmpty(book.bookStores)}">No BookStores</span>
+                </div>
+            </dl>
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="/books" class="btn btn-secondary me-2">Back to Books</a>
+        <a th:href="@{/books/edit/{id}(id=${book.id})}" class="btn btn-warning">Edit Book</a>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+</body>
+</html>

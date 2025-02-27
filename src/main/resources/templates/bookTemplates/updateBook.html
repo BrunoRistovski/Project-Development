@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Book</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">BookStore</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="/books">Books</a></li>
+                <li class="nav-item"><a class="nav-link" href="/authors">Authors</a></li>
+                <li class="nav-item"><a class="nav-link" href="/bookstores">Bookstores</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <div class="form-container">
+        <h2 class="fw-bold text-center mb-4">Update Book</h2>
+        <form th:action="@{/books/edit}" method="post" class="p-4 shadow-lg rounded bg-light">
+            <input type="hidden" name="id" th:value="${book.id}">
+
+            <div class="mb-3">
+                <label for="isbn" class="form-label">ISBN</label>
+                <input type="text" class="form-control" id="isbn" name="isbn" th:value="${book.isbn}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" class="form-control" id="title" name="title" th:value="${book.title}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="genre" class="form-label">Genre</label>
+                <select class="form-select" id="genre" name="genre" required>
+                    <option th:each="g : ${T(br.ris.bookstore.model.enumerations.Genre).values()}"
+                            th:value="${g}" th:text="${g}"
+                            th:selected="${g == book.genre}"></option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" name="description" rows="3" th:text="${book.description}" required></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="imageUrl" class="form-label">Image URL</label>
+                <input type="url" class="form-control" id="imageUrl" name="imageUrl" th:value="${book.imageUrl}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="publicationDate" class="form-label">Publication Date</label>
+                <input type="datetime-local" class="form-control" id="publicationDate" name="publicationDate"
+                       th:value="${book.publicationDate != null ? #temporals.format(book.publicationDate, 'yyyy-MM-dd HH:mm') : ''}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="price" class="form-label">Price</label>
+                <input type="number" step="0.01" class="form-control" id="price" name="price" th:value="${book.price}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="authorIds" class="form-label">Authors</label>
+                <select multiple class="form-select" id="authorIds" name="authorIds">
+                    <option th:each="author : ${authors}"
+                            th:value="${author.id}"
+                            th:text="${author.firstName} + ' ' + ${author.lastName}"
+                            th:selected="${book.authors.contains(author)}"></option>
+                </select>
+            </div>
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-primary">Update Book</button>
+                <a href="/books" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
