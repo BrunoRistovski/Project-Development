@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "bookStoreInventory")
-public class BookStoreInventory {
+@Table(name = "books_in_shopping_cart")
+public class BooksInShoppingCart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,15 +19,14 @@ public class BookStoreInventory {
     private Book book;
 
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinColumn(name = "book_store_id",nullable = false)
-    private BookStore bookStore;
+    @JoinColumn(name = "shopping_cart_Id",nullable = false)
+    private ShoppingCart shoppingCart;
 
-    @Column(nullable = false)
     private int quantity;
 
-    public BookStoreInventory(Book book, BookStore bookStore, int quantity) {
+    public BooksInShoppingCart(Book book, ShoppingCart shoppingCart, int quantity) {
         this.book = book;
-        this.bookStore = bookStore;
+        this.shoppingCart = shoppingCart;
         this.quantity = quantity;
     }
 }

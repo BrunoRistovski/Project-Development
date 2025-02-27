@@ -43,6 +43,11 @@ public class Book {
     @Nullable
     private List<BookStoreInventory> bookStoreInventoryList;
 
+    @OneToMany(mappedBy = "book",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @Nullable
+    private List<BooksInShoppingCart> booksInShoppingCart;
+
+
     public Book(String isbn, String title, Genre genre, String description, String imageUrl, LocalDateTime publicationDate, Double price, @Nullable List<Author> authors) {
         this.isbn = isbn;
         this.title = title;
