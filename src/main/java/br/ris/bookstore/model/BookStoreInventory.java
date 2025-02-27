@@ -15,11 +15,11 @@ public class BookStoreInventory {
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @Column(name = "bookId",nullable = false)
+    @JoinColumn(name = "bookId",nullable = false)
     private Book book;
 
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @Column(name = "bookStoreId",nullable = false)
+    @JoinColumn(name = "bookStoreId",nullable = false)
     private BookStore bookStore;
 
     @Column(nullable = false)

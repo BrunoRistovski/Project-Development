@@ -13,13 +13,10 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">BookStore</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item"><a class="nav-link active" href="/books">Books</a></li>
-                <li class="nav-item"><a class="nav-link" href="/author">Authors</a></li>
+                <li class="nav-item"><a class="nav-link" href="/authors">Authors</a></li>
                 <li class="nav-item"><a class="nav-link" href="/bookstores">Bookstores</a></li>
             </ul>
         </div>
@@ -58,14 +55,6 @@
                             th:text="${author.firstName + ' ' + author.lastName}"></li>
                     </ul>
                     <span th:if="${book.authors == null or #lists.isEmpty(book.authors)}">No authors</span>
-                </div>
-                <div class="mb-2"><strong>BookStores:</strong>
-                    <ul th:if="${book.bookStores != null and not #lists.isEmpty(book.bookStores)}" class="list-unstyled mb-0">
-                        <li th:each="bookStore : ${book.bookStores}"
-                            th:text="${bookStore.name}"></li>
-                    </ul>
-                    <span th:if="${book.bookStores == null or #lists.isEmpty(book.bookStores)}">No BookStores</span>
-                </div>
             </dl>
         </div>
     </div>

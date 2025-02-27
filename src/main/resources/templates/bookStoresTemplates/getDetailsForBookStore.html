@@ -13,14 +13,11 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">BookStore</a>
-        <button class="navbar-togggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link" href="/books">Books</a></li>
+                <li class="nav-item"><a class="nav-link active" href="/books">Books</a></li>
                 <li class="nav-item"><a class="nav-link" href="/authors">Authors</a></li>
-                <li class="nav-item"><a class="nav-link active" href="/bookstores">Bookstores</a></li>
+                <li class="nav-item"><a class="nav-link" href="/bookstores">Bookstores</a></li>
             </ul>
         </div>
     </div>
@@ -28,6 +25,10 @@
 
 <div class="container my-5">
     <h1 class="text-center mb-4">Bookstore Details</h1>
+
+    <div class="text-center mb-4">
+        <a th:href="@{/bookstores/addBook/{id}(id=${bookStore.id})}" class="btn btn-primary">Add Book to Bookstore</a>
+    </div>
 
     <h2 class="text-center mb-3" th:text="${bookStore.name}">Bookstore Name</h2>
 
@@ -46,13 +47,6 @@
                        rel="noopener noreferrer"></a>
                     <span th:if="${bookStore.webSite == null or #strings.isEmpty(bookStore.webSite)}">No website</span>
                 </div>
-                <div class="mb-2"><strong>Books:</strong>
-                    <ul th:if="${bookStore.books != null and not #lists.isEmpty(bookStore.books)}" class="list-unstyled mb-0">
-                        <li th:each="book : ${bookStore.books}"
-                            th:text="${book.title}"></li>
-                    </ul>
-                    <span th:if="${bookStore.books == null or #lists.isEmpty(bookStore.books)}">No books</span>
-                </div>
             </dl>
         </div>
     </div>
@@ -61,6 +55,35 @@
         <a href="/bookstores" class="btn btn-secondary me-2">Back to Bookstores</a>
         <a th:href="@{/bookstores/edit/{id}(id=${bookStore.id})}" class="btn btn-warning me-1">Edit Bookstore</a>
         <a th:href="@{/bookstores/edit/{id}(id=${bookStore.id})}" class="btn btn-info">Details</a>
+    </div>
+
+    <br>
+
+    <h2 class="text-center mb-3">Books in this Bookstore</h2>
+
+    <br>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div th:if="${bookStoreBooks != null and not #lists.isEmpty(bookStoreBooks)}">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Quantity</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="inventory : ${bookStoreBooks}">
+                        <td th:text="${inventory.book.title}"></td>
+                        <td th:text="${inventory.quantity}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div th:if="${bookStoreBooks == null or #lists.isEmpty(bookStoreBooks)}" class="text-center">
+                <p>No books available in this bookstore.</p>
+            </div>
+        </div>
     </div>
 </div>
 

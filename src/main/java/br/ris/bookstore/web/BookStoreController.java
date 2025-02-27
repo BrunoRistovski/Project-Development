@@ -1,6 +1,7 @@
 package br.ris.bookstore.web;
 
 import br.ris.bookstore.service.BookService;
+import br.ris.bookstore.service.BookStoreInventoryService;
 import br.ris.bookstore.service.BookStoresService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,10 +17,12 @@ public class BookStoreController {
 
     private final BookStoresService bookStoresService;
     private final BookService bookService;
+    private final BookStoreInventoryService bookStoreInventoryService;
 
-    public BookStoreController(BookStoresService bookStoresService, BookService bookService) {
+    public BookStoreController(BookStoresService bookStoresService, BookService bookService, BookStoreInventoryService bookStoreInventoryService) {
         this.bookStoresService = bookStoresService;
         this.bookService = bookService;
+        this.bookStoreInventoryService = bookStoreInventoryService;
     }
 
     @GetMapping()
@@ -71,6 +74,7 @@ public class BookStoreController {
     @GetMapping("/details/{id}")
     public String getDetailsForBookStore(@PathVariable Long id,Model model){
         model.addAttribute("bookStore",bookStoresService.findBookStoreById(id));
+        model.addAttribute("bookStoreBooks",bookStoreInventoryService.findAllBookStoreInventoryByBookStore(id));
         return "bookStoresTemplates/getDetailsForBookStore";
     }
 

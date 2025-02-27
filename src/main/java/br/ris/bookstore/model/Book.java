@@ -39,7 +39,7 @@ public class Book {
     @Nullable
     private List<Author> authors;
 
-    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "book",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @Nullable
     private List<BookStoreInventory> bookStoreInventoryList;
 
