@@ -1,6 +1,7 @@
 package br.ris.bookstore.service;
 
 import br.ris.bookstore.model.Book;
+import br.ris.bookstore.model.BookStoreInventory;
 import br.ris.bookstore.model.enumerations.Genre;
 
 import java.time.LocalDateTime;
@@ -13,4 +14,6 @@ public interface BookService {
     Book createBook(String isbn, String title, Genre genre, String description,String imageUrl, LocalDateTime publicationDate, Double price,List<Long> authorsIds);
     Book updateBook(Long id,String isbn, String title, Genre genre, String description,String imageUrl, LocalDateTime publicationDate, Double price,List<Long> authorsIds);
     Book deleteBook(Long id);
+
+    List<BookStoreInventory> addBookToShoppingCart(Long bookIds);
 }

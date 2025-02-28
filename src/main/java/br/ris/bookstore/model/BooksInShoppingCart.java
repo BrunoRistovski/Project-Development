@@ -14,11 +14,11 @@ public class BooksInShoppingCart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "book_id",nullable = false)
     private Book book;
 
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "shopping_cart_Id",nullable = false)
     private ShoppingCart shoppingCart;
 

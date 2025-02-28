@@ -8,4 +8,5 @@ public interface BookStoreInventoryService {
 
     List<BookStoreInventory> listAllBookStoreInventory();
     List<BookStoreInventory> findAllBookStoreInventoryByBookStore(Long bookStoreId);
+    BookStoreInventory findByBookAndBookStore(Long bookIds,Long bookStoreIds);
 }

@@ -2,14 +2,14 @@ package br.ris.bookstore.service.Implementation;
 
 import br.ris.bookstore.model.Author;
 import br.ris.bookstore.model.Book;
-import br.ris.bookstore.model.BookStore;
+
 import br.ris.bookstore.model.BookStoreInventory;
 import br.ris.bookstore.model.enumerations.Genre;
 import br.ris.bookstore.repository.AuthorRepository;
 import br.ris.bookstore.repository.BookRepository;
 import br.ris.bookstore.repository.BookStoreInventoryRepository;
-import br.ris.bookstore.repository.BookStoresRepository;
 import br.ris.bookstore.service.BookService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -22,9 +22,12 @@ public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
 
-    public BookServiceImpl(BookRepository bookRepository, AuthorRepository authorRepository) {
+    private final BookStoreInventoryRepository bookStoreInventoryRepository;
+
+    public BookServiceImpl(BookRepository bookRepository, AuthorRepository authorRepository, BookStoreInventoryRepository bookStoreInventoryRepository) {
         this.bookRepository = bookRepository;
         this.authorRepository = authorRepository;
+        this.bookStoreInventoryRepository = bookStoreInventoryRepository;
     }
 
     @Override
@@ -64,11 +67,36 @@ public class BookServiceImpl implements BookService {
         return bookRepository.save(book);
     }
 
+
     @Override
+    @Transactional
     public Book deleteBook(Long id) {
         Book book = findBookById(id);
+//        if (book.getAuthors() != null) {
+//            for (Author author : book.getAuthors()) {
+//                author.getBooks().remove(book); // Updates the owning side (Author)
+//            }
+//        }
+//        if(book.getBookStoreInventoryList() !=null)
+//            book.getBookStoreInventoryList().remove(book);
+
         bookRepository.delete(book);
         return book;
+    }
+
+    @Override
+    public List<BookStoreInventory> addBookToShoppingCart(Long bookIds) {
+
+        List<BookStoreInventory> searched = new ArrayList<>();
+        List<BookStoreInventory> allBookStoreInventory = bookStoreInventoryRepository.findAll();
+
+        Book book = findBookById(bookIds);
+
+        for(BookStoreInventory bookStoreInventory : allBookStoreInventory){
+            if (bookStoreInventory.getBook().equals(book))
+                searched.add(bookStoreInventory);
+        }
+        return searched;
     }
 
     public List<Author> getAuthors(List<Long> authorsIds){

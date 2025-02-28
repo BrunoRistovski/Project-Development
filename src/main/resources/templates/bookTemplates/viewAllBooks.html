@@ -74,6 +74,7 @@
                     <p><strong>Price:</strong> $<span th:text="${book.price}"></span></p>
                 </div>
                 <div class="card-footer bg-light d-flex justify-content-end">
+                    <a th:href="@{/books/addToShoppingCart/{id}(id=${book.id})}" class="btn btn-sm btn-primary me-2">AddToShoppingCart</a>
                     <a th:href="@{/books/details/{id}(id=${book.id})}" class="btn btn-sm btn-info me-2">Details</a>
                     <a th:href="@{/books/edit/{id}(id=${book.id})}" class="btn btn-sm btn-warning me-2">Edit</a>
                     <form th:action="@{/books/delete/{id}(id=${book.id})}" method="post" class="d-inline">

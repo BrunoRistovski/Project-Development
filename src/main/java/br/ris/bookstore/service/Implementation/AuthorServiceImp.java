@@ -64,6 +64,11 @@ public class AuthorServiceImp implements AuthorService {
     @Override
     public Author deleteAuthor(Long id) {
         Author author = findAuthorById(id);
+        if (author.getBooks() != null) {
+            for (Book book : author.getBooks()) {
+                book.getAuthors().remove(author); // Updates the owning side (Author)
+            }
+        }
         authorRepository.delete(author);
         return author;
     }
