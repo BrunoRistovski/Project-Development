@@ -12,11 +12,34 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">BookStore</a>
+        <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link active" href="/books">Books</a></li>
+            <li class="nav-item"><a class="nav-link" href="/authors">Authors</a></li>
+            <li class="nav-item"><a class="nav-link" href="/bookstores">Bookstores</a></li>
+            <li class="nav-item"><a class="nav-link" href="/shoppingCart">Shopping Cart</a></li>
+            <li class="nav-item"><a class="nav-link" href="/orders">My Orders</a></li>
+        </ul>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link active" href="/books">Books</a></li>
-                <li class="nav-item"><a class="nav-link" href="/authors">Authors</a></li>
-                <li class="nav-item"><a class="nav-link" href="/bookstores">Bookstores</a></li>
+            <ul class="navbar-nav ms-auto">
+                <!-- Not Logged In: Show Log In Button -->
+                <li class="nav-item" th:if="${session.user == null}">
+                    <a class="btn btn-primary" href="/users/logIn">Log In</a>
+                </li>
+                <!-- Logged In: Show User Name with Dropdown -->
+                <li class="nav-item dropdown" th:if="${session.user != null}">
+                    <a class="btn btn-primary dropdown-toggle" href="#" id="userDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false"
+                       th:text="${session.user.firstName + ' ' + session.user.lastName}"></a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" th:href="@{/users/details/{id}(id=${session.user.id})}">Profile</a></li>
+                        <li><a class="dropdown-item" href="/orders">My Orders</a></li>
+                        <li><a class="dropdown-item" href="/users/logOff">Log Off</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>

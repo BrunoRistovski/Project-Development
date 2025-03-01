@@ -1,9 +1,11 @@
 package br.ris.bookstore.model;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -16,12 +18,17 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    private List<Book> book;
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private User user;
 
-    private BookStore bookStore;
+    private LocalDateTime orderedTime;
 
-    private int quantity;
+    @OneToMany(mappedBy = "order",fetch = FetchType.EAGER,cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @Nullable
+    private List<BooksInOrders> booksInOrders;
 
-    private double total;
+    public Order(User user, LocalDateTime orderedTime) {
+        this.user = user;
+        this.orderedTime = orderedTime;
+    }
 }

@@ -1,10 +1,12 @@
 package br.ris.bookstore.model;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -30,8 +32,12 @@ public class User {
     @Column(unique = true)
     private String password;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private ShoppingCart shoppingCart;
+
+    @OneToMany(fetch = FetchType.EAGER,cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @Nullable
+    private List<Order> orders;
 
     public User(String firstName, String lastName, LocalDate birthday, String address, String email, String password, ShoppingCart shoppingCart) {
         this.firstName = firstName;

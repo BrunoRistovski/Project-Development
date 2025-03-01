@@ -33,7 +33,7 @@ public class Author {
     @Column(length = 500)
     private String webSite;
 
-    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
     @Nullable
     private List<Book> books;
 

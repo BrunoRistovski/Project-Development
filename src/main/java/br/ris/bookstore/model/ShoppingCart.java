@@ -18,10 +18,10 @@ public class ShoppingCart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(mappedBy = "shoppingCart",cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "shoppingCart")
     private User user;
 
-    @OneToMany(mappedBy = "shoppingCart",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "shoppingCart",fetch = FetchType.EAGER)
     @Nullable
     private List<BooksInShoppingCart> booksInShoppingCart;
 }

@@ -29,7 +29,7 @@ public class BookStore {
 
     public String webSite;
 
-    @OneToMany(mappedBy = "bookStore",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "bookStore",fetch = FetchType.EAGER)
     @Nullable
     List<BookStoreInventory> bookStoreInventoryList;
 

@@ -9,6 +9,7 @@ import br.ris.bookstore.repository.ShoppingCartRepository;
 import br.ris.bookstore.service.BooksInShoppingCartService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -46,4 +47,5 @@ public class BooksInShoppingCartServiceImpl implements BooksInShoppingCartServic
         booksInShoppingCartRepository.delete(booksInShoppingCart);
         return booksInShoppingCart;
     }
+
 }

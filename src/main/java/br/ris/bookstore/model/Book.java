@@ -35,18 +35,21 @@ public class Book {
 
     private Double price;
 
-    @ManyToMany(mappedBy = "books",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "books",fetch = FetchType.EAGER)
     @Nullable
     private List<Author> authors;
 
-    @OneToMany(mappedBy = "book",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "book",fetch = FetchType.EAGER)
     @Nullable
     private List<BookStoreInventory> bookStoreInventoryList;
 
-    @OneToMany(mappedBy = "book",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "book",fetch = FetchType.EAGER)
     @Nullable
     private List<BooksInShoppingCart> booksInShoppingCart;
 
+    @OneToMany(mappedBy = "book",fetch = FetchType.EAGER)
+    @Nullable
+    private List<BooksInOrders> booksInOrders;
 
     public Book(String isbn, String title, Genre genre, String description, String imageUrl, LocalDateTime publicationDate, Double price, @Nullable List<Author> authors) {
         this.isbn = isbn;
